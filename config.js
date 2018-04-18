@@ -1,0 +1,1 @@
+const URL = data/data.json;

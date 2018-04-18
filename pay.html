@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>微信支付</title>
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+<section id="pay">
+    <div v-if="which=='确认支付'">
+        <header class="c42" v-bind:class="wxHeader">
+            <a href="#" class="icon back ali-back-icon" v-if="agent==1" v-on:click="close"></a>
+            <a href="#" class="icon back wx-back-icon" v-if="agent==2" v-on:click="close"></a>
+            <a href="#" class="icon back arrow-back-icon" v-if="agent==3" v-on:click="close"></a>
+            <span class="title" v-bind:class="witchAgent">确认支付</span>
+        </header>
+        <section class="wrap">
+            <p class="center">
+                <img src="" alt="logo" class="logo-img">
+            </p>
+
+            <div class="content">
+                <div class="content-bar"></div>
+                <div class="content-detail">
+                    <dl>
+                        <dt>服务名称</dt>
+                        <dd>转店快</dd>
+                    </dl>
+                    <dl>
+                        <dt>服务人员</dt>
+                        <dd>深圳小敏</dd>
+                    </dl>
+                    <dl>
+                        <dt>服务价格</dt>
+                        <dd class="red">2000.00元</dd>
+                    </dl>
+                    <dl>
+                        <dt>预付金额</dt>
+                        <dd>1000.00元</dd>
+                    </dl>
+                </div>
+            </div>
+        </section>
+        <footer class="clearfix">
+            <p class="center fs14 mb12 lh25">阅读 <a href="" class="mr10">服务协议</a>
+                <i class="icon qual-icon mr3"></i><a href="http://www.pupuwang.com/h5/aptitude">资质介绍</a></p>
+            <p class="center c8 mb12 lh25" v-if="agent==3">请确认信息后选择支付方式</p>
+            <div v-if="agent==3">
+                <div class="left w50s">
+                    <button class="btn aliPay-btn" v-on:click="aliPay">支付宝支付</button>
+                </div>
+                <div class="right w50s">
+                    <button class="btn wxPay-btn" v-on:click="wxPay">微信支付</button>
+                </div>
+            </div>
+            <div class="center">
+                <button class="btn aliPay-btn" v-if="agent==1" v-on:click="aliPay">支付宝支付</button>
+                <button class="btn wxPay-btn" v-if="agent==2" v-on:click="wxPay">微信支付</button>
+            </div>
+
+        </footer>
+    </div>
+    <div v-if="which=='二维码失效'">
+        <header class="c42">
+            <a href="#" class="icon back arrow-back-icon" v-on:click="close"></a>
+            <span class="title ml-6vw">二维码失效</span>
+        </header>
+        <section class="wrap">
+            <p class="center">
+                <img src="images/" alt="logo" class="logo-img">
+            </p>
+
+            <div class="center">
+                <img src="images/clock.png" alt="clock" class="clock-img">
+                <p class="c42 f24 mb12 f-bold">二维码已失效</p>
+                <p class="c8 fs14">您可进行更多操作</p>
+            </div>
+        </section>
+        <footer class="center">
+            <button class="btn red-btn" v-on:click="openApp">打开 APP</button>
+        </footer>
+    </div>
+    <div v-if="which=='支付结果'">
+    <header class="c42">
+        <a href="#" class="icon back arrow-back-icon" v-on:click="close"></a>
+        <span class="title ml-6vw">支付结果</span>
+    </header>
+    <section class="wrap">
+        <p class="center">
+            <img src="images/" alt="logo" class="logo-img">
+        </p>
+        <div class="center" v-if="payResult">
+            <img src="images/failure.png" alt="failure" class="clock-img">
+            <p class="c42 f24 mb12 f-bold">支付失败!</p>
+            <p class="c8 fs14">请重新支付或检查账户余额</p>
+        </div>
+        <div class="center" v-else>
+            <img src="images/success.png" alt="success" class="clock-img">
+            <p class="c42 f24 mb12 f-bold">支付成功!</p>
+            <p class="c8 fs14">您可打开APP查看已购买的服务</p>
+        </div>
+    </section>
+    <footer class="center">
+        <button class="btn red-btn" v-if="payResult">重新支付</button>
+        <button class="btn red-btn" v-else v-on:click="openApp">打开 APP</button>
+    </footer>
+</div>
+    <div v-if="which=='服务已付款'">
+        <header class="c42">
+            <a href="#" class="icon back arrow-back-icon" v-on:click="close"></a>
+            <span class="title ml-6vw">服务已付款</span>
+        </header>
+        <section class="wrap">
+            <p class="center">
+                <img src="images/" alt="logo" class="logo-img">
+            </p>
+            <div class="center">
+                <img src="images/money.png" alt="money" class="clock-img">
+                <p class="c42 f24 mb12 f-bold">本次服务已付款</p>
+                <p class="c8 fs14">您可打开APP进行更多操作</p>
+            </div>
+        </section>
+        <footer class="center">
+            <button class="btn red-btn" v-on:click="openApp">打开 APP</button>
+        </footer>
+    </div>
+</section>
+
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/vue.min.js"></script>
+<script src="config.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
